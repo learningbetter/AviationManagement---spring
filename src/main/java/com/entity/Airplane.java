@@ -1,15 +1,16 @@
 package com.entity;
 
+import org.springframework.context.annotation.Bean;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class Airplane {
+
 	private Integer airplaneId;
 	private String airplaneType;/*飞机型号*/
 	private int firstClassLimit;/*头等舱个数*/
 	private int businessClassLimit;/*商务舱个数*/
 	private int economyClassLimit;/*经济舱个数*/
+
 
 	@Override
 	public String toString() {

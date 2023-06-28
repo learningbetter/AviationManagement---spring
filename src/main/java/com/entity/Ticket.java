@@ -1,9 +1,6 @@
 package com.entity;
 
-import org.springframework.stereotype.Component;
-
 /*该实体类可用于在 我的机票 页面显示统计数据*/
-@Component
 public class Ticket {
 	/*Ticket的创建只能在FlightRevenue航班收益中进行*/
 	public static final String CLASS1_FIRST = "头等舱";

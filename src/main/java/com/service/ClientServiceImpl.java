@@ -66,6 +66,7 @@ public class ClientServiceImpl implements ClientService {
 		else if (purchasedFlight == 3)
 			ticket.setSeatType(Ticket.CLASS3_ECONOMY);
 		ticket.setSeatNo(1 + ticketDao.findSeatNo(flightId, ticket.getSeatType()));
+		;
 		return ticketDao.addTicket(ticket);
 	}
 

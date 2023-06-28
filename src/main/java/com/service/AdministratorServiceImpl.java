@@ -32,6 +32,7 @@ public class AdministratorServiceImpl implements AdministratorService{
 		if (airplane==null)
 			return false;
 		else{
+			//此处将airPlane设置进Flight对象，对应数据库flight中字段airplane_id是int，是否需要同步设置id?
 			flight.setAirplane(airplane);
 			return flightDao.addFlight(flight);
 		}

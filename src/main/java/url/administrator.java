@@ -1,7 +1,6 @@
 package url;
 
 import com.service.AdministratorService;
-import com.service.AdministratorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

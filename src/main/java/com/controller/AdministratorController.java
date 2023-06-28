@@ -7,50 +7,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.service.AdministratorService;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/Administrator")
 public class AdministratorController {
-
     @Autowired
     private AdministratorService admin;
-//撒旦法
 
     @RequestMapping("/addAirplane")
-    public String addAirplane(HttpServletRequest request , HttpServletResponse response) throws IOException {
-//        Airplane airplane = new Airplane();
-        return "index";
-//
-//        //获取前端输入的相关的信息并设置给airplane对象
-//        airplane.setAirplaneType(request.getParameter("airplaneType"));
-//        airplane.setFirstClassLimit(Integer.parseInt(request.getParameter("firstClassLimit")));
-//        airplane.setBusinessClassLimit(Integer.parseInt(request.getParameter("businessClassLimit")));
-//        airplane.setEconomyClassLimit(Integer.parseInt(request.getParameter("economyClassLimit")));
-//        response.setContentType("text/html;charset=UTF-8");
-//        return "index";
-        //调用service层方法添加飞机
-//        if (admin.addAirplane(airplane)){
-////            response.getWriter().print("<script>alert('飞机增加成功'); window.location.href='administrator';</script>");
-//            response.getWriter().print("飞机增加成功");
-//            return "";
-//        }else{
-////            response.getWriter().print("<script>alert('飞机增加失败'); window.location.href='administrator';</script>");
-//            response.getWriter().print("飞机增加失败");
-//        }
-
-//        返回到哪个界面
-//        return "";
+    public ModelAndView addAirplane(HttpServletRequest request , HttpServletResponse response) throws IOException {
+        Airplane airplane = new Airplane();
+        //获取前端输入的相关的信息并设置给airplane对象
+        airplane.setAirplaneType(request.getParameter("airplaneType"));
+        airplane.setFirstClassLimit(Integer.parseInt(request.getParameter("firstClassLimit")));
+        airplane.setBusinessClassLimit(Integer.parseInt(request.getParameter("businessClassLimit")));
+        airplane.setEconomyClassLimit(Integer.parseInt(request.getParameter("economyClassLimit")));
+        ModelAndView mv = new ModelAndView();
+//        调用service层方法添加飞机
+        if (admin.addAirplane(airplane)){
+            mv.addObject("message","飞机增加成功");
+        }else{
+            mv.addObject("message","飞机增加失败");
+        }
+        mv.setViewName("administrator");
+        return mv;
     }
 
+    public ModelAndView showAllAirplane(HttpServletRequest request , HttpServletResponse response){
+        //显示所有飞机，放着看后面要不要做
+        return null;
+    }
+
+
     @RequestMapping("/createFlight")
-    public String createFight(HttpServletRequest request , HttpServletResponse response) throws IOException {
+    public ModelAndView createFight(HttpServletRequest request , HttpServletResponse response) throws IOException {
 
         Flight flight = new Flight();
         SimpleDateFormat formatter  = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -66,20 +66,32 @@ public class AdministratorController {
         flight.setFirstClassPrice(Float.parseFloat(request.getParameter("firstClassPrice")));
         flight.setBusinessClassPrice(Float.parseFloat(request.getParameter("businessClassPrice")));
         flight.setEconomyClassPrice(Float.parseFloat(request.getParameter("economyClassPrice")));
+
+        ModelAndView mv = new ModelAndView();
         if (admin.createFlight(flight,request.getParameter("airplaneType")))
-            response.getWriter().print("<script>alert('航班创建成功');window.location.href='administrator';</script>");
+            mv.addObject("message","航班创建成功");
         else
-            response.getWriter().print("<script>alert('航班创建失败');window.location.href='administartor';</script>");
-//      返回到哪个界面
-        return "";
+            mv.addObject("message","航班创建失败");
+        return mv;
     }
 
     @RequestMapping("/deleteFlight")
-    public String deleteFlight(HttpServletRequest request , HttpServletResponse response) throws IOException {
+    public ModelAndView deleteFlight(HttpServletRequest request , HttpServletResponse response) throws IOException {
+        ModelAndView mv = new ModelAndView();
         if (admin.deleteFlight(Integer.parseInt(request.getParameter("deleteFlight"))))
-            response.getWriter().print("<script>alert('删除航班成功');window.location.href('administrator');</script>");
+            mv.addObject("message","航班删除成功");
         else
-            response.getWriter().print("<script>alert('删除航班失败');window.location.href('administrator');</script>");
-        return "";
+            mv.addObject("message","航班删除失败");
+        return mv;
+    }
+
+    @RequestMapping("/showFlight")
+    public ModelAndView showFlight(HttpServletRequest request , HttpServletResponse response){
+        List<Flight> flights= admin.showFlight();
+        HttpSession session = request.getSession();
+        session.setAttribute("flightsList",flights);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("administrator");
+        return mv;
     }
 }

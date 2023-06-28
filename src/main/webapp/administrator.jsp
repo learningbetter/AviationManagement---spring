@@ -187,8 +187,9 @@ th, td {
 			<label for="show1" class="show-btn">增加飞机</label> 
 			<label for="show2" class="show-btn">发布航班</label>
 		</div>
-		
+		<span style="color:red">${message}</span>
 		<form class="addPlane" method="POST" action="/Administrator/addAirplane">
+
 			<div class="text">增加飞机</div>
 			<div class="data">
 				<label>飞机型号：</label> <input type="text" name="airplaneType" />
@@ -207,7 +208,7 @@ th, td {
 			</div>
 		</form>
 		
-		<form class="createPlane" method="POST" action="administratorCreateFlight">
+		<form class="createPlane" method="POST" action="/Administrator/createFlight">
 			<div class="text">发布航班</div>
 			<div class="data">
 				<label>飞机型号：</label> <input type="text" name="airplaneType" />
@@ -252,7 +253,7 @@ th, td {
 				<th>经济舱价格</th>
 				<th>已售座位数</th>
 			</tr>
-			<c:foreach var="list" items="${flightList}" varStatus="order">
+			<c:foreach var="list" items="${flightsList}" varStatus="order">
 				<td><${order}/td>
 				<td>${list.fromData}</td>
 				<td>${list.toData}</td>
@@ -261,7 +262,7 @@ th, td {
 				<td>${list.firstClassPrice}</td>
 				<td>${list.businessClassPrice}</td>
 				<td>${list.economyClassPrice}</td>
-				<td>${flightList.get(order-1)}</td>
+				<td>${flightsList.get(order-1)}</td>
 			</c:foreach>
 		</table>
 	</div>

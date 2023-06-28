@@ -38,5 +38,4 @@ public class ClientController {
 			response.getWriter().print("<script>alert('退票失败');window.location.href('myTicket');</script>");
 		return "";
 	}
-
 }
