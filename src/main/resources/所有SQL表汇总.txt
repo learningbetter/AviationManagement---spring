@@ -1,0 +1,39 @@
+Airplane:
+    create table Airplane (
+    id int primary key auto_increment,
+    airplaneType varchar(80),
+    firstClassLimit int,
+    businessClassLimit int,
+    economyClassLimit int)
+    charset=utf8;
+Client:
+    create table client(
+    id int primary key auto_increment,
+    name varchar(80),
+    password varchar(80),
+    isAdmin int);  //1代表是管理员,2代表是用户
+
+
+Flight：
+    create table flight(
+    id int primary key auto_increment,
+    from_Data date,
+    to_data date,
+    from_position varchar(80),
+    to_position varchar(80),
+    first_class_price int,
+    business_class_price int,
+    economy_class_price int,
+    airplane_id int)
+    charset=utf8;
+Ticket:
+    create table ticket(
+    id int primary key auto_increment,
+    client_id int,
+    flight_id int,
+    seat_type varchar(20),
+    seat_no int)
+    charset=utf8;
+
+
+
