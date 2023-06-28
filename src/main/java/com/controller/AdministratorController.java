@@ -82,6 +82,7 @@ public class AdministratorController {
             mv.addObject("message","航班删除成功");
         else
             mv.addObject("message","航班删除失败");
+        mv.setViewName("administrator");
         return mv;
     }
 
