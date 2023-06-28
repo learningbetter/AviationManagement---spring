@@ -21,7 +21,7 @@ public class AdministratorController {
 
     @Autowired
     private AdministratorService admin;
-
+//撒旦法
 
     @RequestMapping("/addAirplane")
     public String addAirplane(HttpServletRequest request , HttpServletResponse response) throws IOException {
