@@ -1,5 +1,8 @@
 package com.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Client {
 	private Integer clientId;
 	private String name;

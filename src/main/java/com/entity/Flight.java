@@ -1,7 +1,9 @@
 package com.entity;
 
-import java.util.Date;
+import org.springframework.stereotype.Component;
 
+import java.util.Date;
+@Component
 public class Flight {
 	private int flightId;
 	private Date fromData;
