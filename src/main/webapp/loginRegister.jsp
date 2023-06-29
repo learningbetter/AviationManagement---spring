@@ -24,6 +24,7 @@
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
+	<base href="${pageContext.request.contextPath}/"> <%--防止路径叠加--%>
 <title>登录界面</title>
 <style>
 body {
@@ -111,8 +112,8 @@ input[type="submit"] {
 			<nav>
 				<ul>
 					<li><a class="action">登录页面</a></li>
-					<li><a href="buyTicket.jsp">购票系统</a></li>
-					<li><a href="myTicket.jsp">我的机票</a></li>
+					<li><a href="Client/buyTicket">购票系统</a></li>
+					<li><a href="Client/myTicket">我的机票</a></li>
 				</ul>
 			</nav>
 			<div class="title"><h2>航空公司购票系统</h2></div>

@@ -6,6 +6,7 @@ import com.entity.Flight;
 import com.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.service.ClientService;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,21 +53,21 @@ public class ClientController {
 	@RequestMapping("/buy")/*点击买票按钮*/
 	@ResponseBody
 	public String buy(@SessionAttribute Integer flightId, @RequestParam Integer purchasedFlight
-			,@SessionAttribute Integer clientId) throws IOException {/*object转换可能会出错,后面注意*/
-		/*注：flightId这里应该由前端session发送，但是前端代码有错误，直接没发送这个消息，稍后再改*/
+			, @SessionAttribute Integer clientId) throws IOException {/*object转换可能会出错,后面注意*/
+		System.out.println(flightId+" "+purchasedFlight+" "+clientId);
 		if (clientService.buyTicket(flightId,purchasedFlight,clientId))
-			return "<script>alert('购票成功');window.location.href('/myTicket');</script>";
+			return "<script>alert('购票成功');window.location.href=\"/Client/myTicket\";</script>";
 		else
-			return "<script>alert('购票失败');window.location.href('/myTicket');</script>";
+			return "<script>alert('购票失败');window.location.href=\"/Client/myTicket\";</script>";
 	}
 
 	@RequestMapping("/refundTicket")/*点击退票按钮*/
 	@ResponseBody
 	public String refundTicket(@RequestParam Integer refundTheTicket) throws IOException {
 		if(clientService.refundTheTicket(refundTheTicket))
-			return "<script>alert('退票成功');window.location.href('myTicket');</script>";
+			return "<script>alert('退票成功');window.location.href=\"/Client/myTicket\";</script>";
 		else
-			return "<script>alert('退票失败');window.location.href('myTicket');</script>";
+			return "<script>alert('退票失败');window.location.href=\"/Client/myTicket\";</script>";
 	}
 
 	@RequestMapping("/showFlight")
