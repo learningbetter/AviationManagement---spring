@@ -41,6 +41,7 @@
 如果有其他需要传输的变量，告知我再做修改
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
 <title>管理员界面</title>
@@ -253,7 +254,7 @@ th, td {
 				<th>经济舱价格</th>
 				<th>已售座位数</th>
 			</tr>
-			<c:foreach var="list" items="${flightsList}" varStatus="order">
+			<c:forEach var="list" items="${flightsList}" varStatus="order">
 				<td><${order}/td>
 				<td>${list.fromData}</td>
 				<td>${list.toData}</td>
@@ -263,7 +264,7 @@ th, td {
 				<td>${list.businessClassPrice}</td>
 				<td>${list.economyClassPrice}</td>
 				<td>${flightsList.get(order-1)}</td>
-			</c:foreach>
+			</c:forEach>
 		</table>
 	</div>
 

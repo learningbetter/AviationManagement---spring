@@ -31,7 +31,7 @@
 如果有其他需要传输的变量，告知我再做修改
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%-- <%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%> --%>
+<%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
 <title>购买机票</title>
@@ -178,7 +178,7 @@ input[type="checkbox"] {
 				<th>座位号码</th>
 				<th>购票</th>
 			</tr>
-			<c:foreach var="ticket" items="${flightList}" varStatus="order">
+			<c:forEach var="ticket" items="${flightList}" varStatus="order">
 				<td><${ticket.ticketId}</td>
 				<td>${ticket.clientId}</td>
 				<td>${ticket.flightId}</td>
@@ -188,7 +188,7 @@ input[type="checkbox"] {
 					<div class="show">
 						<label for="show" class="show-btn"> 购买机票</label>
 					</div>
-					<form class="buyTicket" method="POST" action="buyTicketBuy">
+					<form class="buyTicket" method="POST" action="/Client/buy">
 						<div class="text">选择机票类型</div>
 						<ul>
 							<select>
@@ -201,7 +201,7 @@ input[type="checkbox"] {
 							</div>
 						</ul>
 					</form></td>
-			</c:foreach>
+			</c:forEach>
 		</table>
 	</div>
 

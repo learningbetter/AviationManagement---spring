@@ -8,6 +8,7 @@ import com.entity.Flight;
 import com.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,12 +23,12 @@ public class ClientServiceImpl implements ClientService {
 	private FlightDao flightDao;
 
 	@Override
-	public int loginRegister(String username, String password, HttpSession session) {
+	public int loginRegister(String username, String password, ModelAndView modelAndView) {
 		/*id统一使用自增*/
 		Client client = clientDao.findClient(username, password);
 		if (null != client) {
 			if (client.getPassword().equals(password)) {
-				session.setAttribute("clientId", client.getClientId());
+				modelAndView.addObject("clientId", client.getClientId());
 				System.out.println("LoginSuccess,ID is:" + client.getClientId());
 				return client.getIsAdmin(); //返回是否是管理员,1代表是，二代表否
 			}
@@ -40,7 +41,7 @@ public class ClientServiceImpl implements ClientService {
 			client.setIsAdmin(2);
 
 			if (clientDao.addClient(client)) {
-				session.setAttribute("clientId", client.getClientId());
+				modelAndView.addObject("clientId", client.getClientId());
 				System.out.println("RegisterSuccess,ID is:" + client.getClientId());
 				return client.getIsAdmin();
 			} else

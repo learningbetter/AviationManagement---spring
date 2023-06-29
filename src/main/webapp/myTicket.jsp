@@ -25,7 +25,7 @@
 如果有其他需要传输的变量，告知我再做修改
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%-- <%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%> --%>
+<%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
 <title>我的机票</title>
@@ -131,7 +131,7 @@ button {
 				<td>${ticket.seatNo}</td>
 				<td>
 					<form class="refundTicket" method="POST"
-						action="myTicketRefund">
+						action="/Client/refundTicket">
 						<button name="refundTheTicket"
 							value="${ticketList.get(i).getTicketId()}">退票</button>
 					</form>

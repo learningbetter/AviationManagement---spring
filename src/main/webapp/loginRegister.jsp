@@ -21,6 +21,7 @@
 如果有其他需要传输的变量，告知我再做修改
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
 <title>登录界面</title>
@@ -119,7 +120,7 @@ input[type="submit"] {
 	</aside>
 
 
-	<form method="POST" action="/LoginRegister/loginRegister">
+	<form method="POST" action="loginRegister">
 		<span style="color:red">${loginError}</span>
 		<div class="user">
 			<label>账号：</label> <input type="text" name="username" /><br> <label>密码：</label>

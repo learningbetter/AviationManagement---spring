@@ -11,7 +11,8 @@ Client:
     id int primary key auto_increment,
     name varchar(80),
     password varchar(80),
-    isAdmin int);  //1代表是管理员,2代表是用户
+    isAdmin int);
+    //1代表是管理员,2代表是用户
 
 
 Flight：
