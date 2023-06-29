@@ -118,7 +118,7 @@ button {
 	cursor: pointer;
 }
 
-.createPlane {
+.createFlight {
 	display: none;
 	height: 400px;
 	width: 350px;
@@ -133,10 +133,30 @@ button {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-#show2:checked ~ .createPlane {
+
+
+#show2:checked ~ .createFlight {
 	display: block;
 }
 
+.deleteFlight {
+	display: none;
+	height: 400px;
+	width: 350px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index:9;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+#show3:checked ~ .deleteFlight {
+	display: block;
+}
 .show {
 	position: absolute;
 	height: 60px;
@@ -182,11 +202,13 @@ th, td {
 	</div>
 	<!-- banner -->
 	<div class="banner">
-		<input type="checkbox" id="show1"> <input type="checkbox"
-			id="show2">
+		<input type="checkbox" id="show1">
+		<input type="checkbox" id="show2">
+		<input type="checkbox" id="show3">
 		<div class="show">
 			<label for="show1" class="show-btn">增加飞机</label> 
 			<label for="show2" class="show-btn">发布航班</label>
+			<label for="show3" class="show-btn">删除航班</label>
 		</div>
 		<span style="color:red">${message}</span>
 		<form class="addPlane" method="POST" action="/Administrator/addAirplane">
@@ -209,7 +231,7 @@ th, td {
 			</div>
 		</form>
 		
-		<form class="createPlane" method="POST" action="/Administrator/createFlight">
+		<form class="createFlight" method="POST" action="/Administrator/createFlight">
 			<div class="text">发布航班</div>
 			<div class="data">
 				<label>飞机型号：</label> <input type="text" name="airplaneType" />
@@ -239,12 +261,23 @@ th, td {
 				<button type="submit">提交</button>
 			</div>
 		</form>
+
+		<form class="deleteFlight" method="POST" action="/Administrator/deleteFlight">
+
+			<div class="text">删除航班</div>
+			<div class="data">
+				<label>航班编号：</label> <input type="text" name="flightId" />
+			</div>
+			<div class="btn">
+				<button type="submit">提交</button>
+			</div>
+		</form>
 	</div>
 	<!-- list -->
 	<div class="list">
 		<table>
 			<tr align="center">
-				<th>序号</th>
+				<th>航班编号</th>
 				<th>出发时间</th>
 				<th>到达时间</th>
 				<th>始发地区</th>
@@ -254,16 +287,16 @@ th, td {
 				<th>经济舱价格</th>
 				<th>已售座位数</th>
 			</tr>
-			<c:forEach var="list" items="${flightsList}" varStatus="order">
-				<td><${order}/td>
+			<c:forEach var="list" items="${flightList}" varStatus="order">
+				<td>${list.flightId}</td>
 				<td>${list.fromData}</td>
 				<td>${list.toData}</td>
 				<td>${list.from}</td>
 				<td>${list.to}</td>
 				<td>${list.firstClassPrice}</td>
 				<td>${list.businessClassPrice}</td>
-				<td>${list.economyClassPrice}</td>
-				<td>${flightsList.get(order-1)}</td>
+				<td>${list.economyClassPrice}</td><br>
+<%--	此处会报异常，暂时注释			<td>${flightsList.get(order-1)}</td>--%>
 			</c:forEach>
 		</table>
 	</div>

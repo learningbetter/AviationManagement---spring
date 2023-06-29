@@ -23,12 +23,12 @@ public class ClientServiceImpl implements ClientService {
 	private FlightDao flightDao;
 
 	@Override
-	public int loginRegister(String username, String password, ModelAndView modelAndView) {
+	public int loginRegister(String username, String password, HttpSession session) {
 		/*id统一使用自增*/
-		Client client = clientDao.findClient(username, password);
+		Client client = clientDao.findClientByName(username);
 		if (null != client) {
 			if (client.getPassword().equals(password)) {
-				modelAndView.addObject("clientId", client.getClientId());
+				session.setAttribute("clientId", client.getClientId());
 				System.out.println("LoginSuccess,ID is:" + client.getClientId());
 				return client.getIsAdmin(); //返回是否是管理员,1代表是，二代表否
 			}
@@ -41,7 +41,7 @@ public class ClientServiceImpl implements ClientService {
 			client.setIsAdmin(2);
 
 			if (clientDao.addClient(client)) {
-				modelAndView.addObject("clientId", client.getClientId());
+				session.setAttribute("clientId", client.getClientId());
 				System.out.println("RegisterSuccess,ID is:" + client.getClientId());
 				return client.getIsAdmin();
 			} else
@@ -54,20 +54,28 @@ public class ClientServiceImpl implements ClientService {
 	public boolean buyTicket(int flightId, int purchasedFlight, int clientId) {
 		/*id统一使用自增，mybatis自动获取*/
 		Ticket ticket = new Ticket();
-		Client client = new Client();
-		client.setClientId(clientId);
-		Flight flight = new Flight();
-		flight.setFlightId(flightId);
+
+//		Client client = new Client();
+//		client.setClientId(clientId);
+//		Flight flight = new Flight();
+//		flight.setFlightId(flightId);
+
+		Client client = clientDao.findClientById(clientId);
+		Flight flight = flightDao.findFlightById(flightId);
+
 		ticket.setClient(client);
 		ticket.setFlight(flight);
+
 		if (purchasedFlight == 1)
 			ticket.setSeatType(Ticket.CLASS1_FIRST);
 		else if (purchasedFlight == 2)
 			ticket.setSeatType(Ticket.CLASS2_BUSINESS);
 		else if (purchasedFlight == 3)
 			ticket.setSeatType(Ticket.CLASS3_ECONOMY);
-		ticket.setSeatNo(1 + ticketDao.findSeatNo(flightId, ticket.getSeatType()));
-		;
+
+		ticket.setSeatNo(1 + ticketDao.getSeatNo(flightId,
+		ticket.getSeatType()));//ticketDao.getSeatNo()返回当前该舱已有多少张票,加一便是当前座位号
+
 		return ticketDao.addTicket(ticket);
 	}
 
@@ -82,7 +90,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<Ticket> showTicket() {
-		return ticketDao.findAllTicket();
+	public List<Ticket> findAllTicketByClientId(int clientId) {
+		return ticketDao.findAllTicketByClientId(clientId);
 	}
 }

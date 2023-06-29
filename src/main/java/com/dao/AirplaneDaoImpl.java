@@ -12,7 +12,7 @@ public class AirplaneDaoImpl implements AirplaneDao{
 	private JdbcTemplate template;
 	@Override
 	public boolean addAirplane(Airplane airplane) {
-		String sql = "insert into Airplane(airplaneType,firstClassLimit,businessClassLimit,economyClassLimit)"
+		String sql = "insert into airplane(airplaneType,firstClassLimit,businessClassLimit,economyClassLimit)"
 				+ "values (?,?,?,?)";
 
 		return 1 == template.update(sql,airplane.getAirplaneType(),airplane.getFirstClassLimit(),
@@ -21,8 +21,16 @@ public class AirplaneDaoImpl implements AirplaneDao{
 
 	@Override
 	public Airplane findAirplaneByType(String airplaneType) {
-		String sql = "select id,airplaneType,firstClassLimit,businessClassLimit,economyClassLimit from Airplane " +
-				"where airplaneType=?";
-		return template.queryForObject(sql,new AirplaneRowMapper(),airplaneType);
+			String sql = "select id,airplaneType,firstClassLimit,businessClassLimit,economyClassLimit from airplane " +
+					"where airplaneType=?";
+			return template.queryForObject(sql,new AirplaneRowMapper(),airplaneType);
+	}
+
+	@Override
+	public Airplane findAirplaneById(int airplaneId) {
+		String sql = "select id,airplaneType,firstClassLimit,businessClassLimit,economyClassLimit from airplane " +
+				"where id=1";
+		return template.queryForObject(sql,new AirplaneRowMapper());
+
 	}
 }

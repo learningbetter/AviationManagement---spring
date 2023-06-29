@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface ClientService {
-	public int loginRegister(String username, String password, ModelAndView modelAndView);
+	public int loginRegister(String username, String password, HttpSession session);
 	public boolean buyTicket(int flightId,int purchasedFlight,int clientId);
 	public boolean refundTheTicket(int ticketId);
 	public List<Flight> showFlight();
-	public List<Ticket> showTicket();
+	public List<Ticket> findAllTicketByClientId(int clientId);
 }

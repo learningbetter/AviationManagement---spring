@@ -2,6 +2,7 @@ package com.service;
 
 import com.dao.AirplaneDao;
 import com.dao.FlightDao;
+import com.dao.FlightDaoImpl;
 import com.dao.TicketDao;
 import com.entity.Airplane;
 import com.entity.Flight;
@@ -45,7 +46,15 @@ public class AdministratorServiceImpl implements AdministratorService{
 
 	@Override
 	public List<Flight> showFlight() {
-		return flightDao.findAllFlight();
+		List<Flight> flights = null;
+		try {
+			flights = flightDao.findAllFlight();
+		}catch (Exception e){
+			e.printStackTrace();
+		}finally {
+			return flights;
+		}
+
 	}
 
 	@Override

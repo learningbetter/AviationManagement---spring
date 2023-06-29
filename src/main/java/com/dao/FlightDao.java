@@ -9,4 +9,6 @@ public interface FlightDao {
 	public boolean deleteFlight(int flightId);
 	public int countFlight();
 	public List<Flight> findAllFlight();
+
+	public Flight findFlightById(int flightId);
 }

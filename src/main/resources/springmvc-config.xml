@@ -20,16 +20,16 @@
     </bean>
 
 
-    <!-- 配置拦截器：-->
-    <mvc:interceptors>
-        <!-- 可以配置多个拦截器  也可以配置bean 拦截器 拦截所有请求 -->
-        <mvc:interceptor>
-            <!-- 只拦截该路径 -->
-            <mvc:mapping path="/LoginRegister/loginRegister"/>
-            <bean class="com.interceptor.LoginRegisterInterceptor"></bean>
-        </mvc:interceptor>
-
-    </mvc:interceptors>
+<!--    &lt;!&ndash; 配置拦截器：&ndash;&gt;-->
+<!--    <mvc:interceptors>-->
+<!--        &lt;!&ndash; 可以配置多个拦截器  也可以配置bean 拦截器 拦截所有请求 &ndash;&gt;-->
+<!--&lt;!&ndash;        <mvc:interceptor>&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash; 只拦截该路径 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <mvc:mapping path="/LoginRegister/loginRegister"/>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &ndash;&gt;-->
+<!--&lt;!&ndash;        </mvc:interceptor>&ndash;&gt;-->
+<!--        <bean class="com.interceptor.LoginRegisterInterceptor"></bean>-->
+<!--    </mvc:interceptors>-->
 
 </beans>
 

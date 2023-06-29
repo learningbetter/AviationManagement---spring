@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface ClientDao {
 	public boolean addClient(Client client);
-	public Client findClient(String username,String password);
+	public Client findClientByName(String username);
+	public Client findClientById(int clientId);
 
 
 }

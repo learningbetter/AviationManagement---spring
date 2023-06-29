@@ -2,6 +2,8 @@ package com.controller;
 
 
 import com.service.ClientServiceImpl;
+import com.entity.Flight;
+import com.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,19 +13,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.module.ModuleDescriptor;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Client")
 public class ClientController {
 
+
 	@Autowired
 	private ClientService clientService;
 	@RequestMapping("/myTicket")
-	public ModelAndView myTicket(){
+	public ModelAndView myTicket(HttpServletRequest request,HttpServletResponse response){
 		/*直接以地址栏访问+链接跳转+jsp访问数据读取*/
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("ticketList",clientService.showTicket());
+		HttpSession session = request.getSession();
+		int clientId = (int) session.getAttribute("clientId");
+		System.out.println("-----------"+clientId);
+		modelAndView.addObject("ticketList",clientService.findAllTicketByClientId(clientId));
 		modelAndView.setViewName("myTicket.jsp");
 		return modelAndView;
 	}
@@ -35,6 +46,8 @@ public class ClientController {
 		modelAndView.setViewName("buyTicket.jsp");
 		return modelAndView;
 	}
+
+
 	/*以上为url跳转访问，以下为act实际行动*/
 	@RequestMapping("/buy")/*点击买票按钮*/
 	@ResponseBody
@@ -42,9 +55,9 @@ public class ClientController {
 			,@SessionAttribute Integer clientId) throws IOException {/*object转换可能会出错,后面注意*/
 		/*注：flightId这里应该由前端session发送，但是前端代码有错误，直接没发送这个消息，稍后再改*/
 		if (clientService.buyTicket(flightId,purchasedFlight,clientId))
-			return "<script>alert('购票成功');window.location.href('buyTicket');</script>";
+			return "<script>alert('购票成功');window.location.href('/myTicket');</script>";
 		else
-			return "<script>alert('购票失败');window.location.href('buyTicket');</script>";
+			return "<script>alert('购票失败');window.location.href('/myTicket');</script>";
 	}
 
 	@RequestMapping("/refundTicket")/*点击退票按钮*/
@@ -54,5 +67,13 @@ public class ClientController {
 			return "<script>alert('退票成功');window.location.href('myTicket');</script>";
 		else
 			return "<script>alert('退票失败');window.location.href('myTicket');</script>";
+	}
+
+	@RequestMapping("/showFlight")
+	public ModelAndView showFlight(HttpServletRequest request , HttpServletResponse response){
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("administrator");
+		return mv;
 	}
 }

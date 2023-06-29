@@ -81,17 +81,18 @@ public class AdministratorController {
             mv.addObject("message","航班创建成功");
         else
             mv.addObject("message","航班创建失败");
+        mv.setViewName("/Administrator");
         return mv;
     }
 
     @RequestMapping("/deleteFlight")
-    public ModelAndView deleteFlight(@RequestParam Integer deleteFlight) throws IOException {
+    public ModelAndView deleteFlight(@RequestParam Integer flightId) throws IOException {
         ModelAndView mv = new ModelAndView();
-        if (admin.deleteFlight(deleteFlight))
+        if (admin.deleteFlight(flightId))
             mv.addObject("message","航班删除成功");
         else
             mv.addObject("message","航班删除失败");
-        mv.setViewName("administrator.jsp");
+        mv.setViewName("/Administrator");
         return mv;
     }
 

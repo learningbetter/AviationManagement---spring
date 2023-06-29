@@ -1,8 +1,9 @@
 package com.dao;
 
+import com.entity.Airplane;
 import com.entity.Flight;
+import com.mapper.FlightRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -38,9 +39,29 @@ public class FlightDaoImpl implements FlightDao {
 	}
 
 	@Override
+	public Flight findFlightById(int flightId){
+		String sql = "select flight.id,from_Data,to_data,from_position,to_position,first_class_price,business_class_price,economy_class_price,airplane_id," +
+				"airplaneType,firstClassLimit,businessClassLimit,economyClassLimit " +
+				" from flight,airplane where flight.id=? and airplane_id=airplane.id";
+		return template.queryForObject(sql,new FlightRowMapper(),flightId);
+	}
+
+	@Override
 	public List<Flight> findAllFlight() {
-		String sql = "select id,from_Data,to_data,from_position,to_position,first_class_price,business_class_price,\n" +
-				"economy_class_price,airplane_id from flight";
-		return template.query(sql,new BeanPropertyRowMapper<Flight>(Flight.class));
+		String sql = "select flight.id,from_Data,to_data,from_position,to_position,first_class_price,business_class_price,economy_class_price,airplane_id," +
+				"airplaneType,firstClassLimit,businessClassLimit,economyClassLimit " +
+				" from flight,airplane where airplane_id=airplane.id";
+		try {
+			List<Flight> flights = template.query(sql, new FlightRowMapper());
+			System.out.println(flights);
+			return flights;
+		}catch (Exception e)
+		{
+			return null;
+		}
+
 	}
 }
+
+
+
