@@ -40,8 +40,9 @@ public class TicketDaoImpl implements TicketDao{
 	@Override
 	public boolean deleteTicket(int ticketId) {
 		/*根据对象在表中删除一行航班数据(是退票的意思？)*/
-
-		return true;
+		String sql = "delete from ticket where id=?";
+		int row = template.update(sql,ticketId);
+		return 1 == row;
 	}
 
 	@Override

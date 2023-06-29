@@ -58,11 +58,12 @@ public class AdministratorServiceImpl implements AdministratorService{
 	}
 
 	@Override
-	public int[] showFlightNumber() {
-		List<Integer> number = new ArrayList<>();
-		for (int i=1;i<=flightDao.countFlight();i++)
-			number.add(ticketDao.countFlightTicket(i));
-		/*stream将List转换为Integer再换为int，可能有bug*/
-		return number.stream().mapToInt(Integer::intValue).toArray();
+	public int[] showFlightNumber() {   //未实现
+//		List<Integer> number = new ArrayList<>();
+//		for (int i=1;i<=flightDao.countFlight();i++)
+//			number.add(ticketDao.countFlightTicket(i));
+//		/*stream将List转换为Integer再换为int，可能有bug*/
+//		return number.stream().mapToInt(Integer::intValue).toArray();
+		return null;
 	}
 }
