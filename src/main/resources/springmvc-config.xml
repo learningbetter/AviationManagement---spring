@@ -19,7 +19,7 @@
 <!--        <property name="suffix" value=".jsp" />-->
     </bean>
 
-    <mvc:annotation-driven/>
+
 <!--    &lt;!&ndash; 配置拦截器：&ndash;&gt;-->
 <!--    <mvc:interceptors>-->
 <!--        &lt;!&ndash; 可以配置多个拦截器  也可以配置bean 拦截器 拦截所有请求 &ndash;&gt;-->

@@ -45,7 +45,6 @@
 <html>
 <head>
 <title>管理员界面</title>
-	<base href="${pageContext.request.contextPath}/"> <%--防止路径叠加--%>
 <style>
 body {
 	background: linear-gradient(to top, #6ECAE9 0%, #FFFFFF 100%)
@@ -289,17 +288,15 @@ th, td {
 				<th>已售座位数</th>
 			</tr>
 			<c:forEach var="list" items="${flightList}" varStatus="order">
-				<tr>
-					<td>${list.flightId}</td>
-					<td>${list.fromData}</td>
-					<td>${list.toData}</td>
-					<td>${list.from}</td>
-					<td>${list.to}</td>
-					<td>${list.firstClassPrice}</td>
-					<td>${list.businessClassPrice}</td>
-					<td>${list.economyClassPrice}</td>
-					<%--	此处会报异常，暂时注释			<td>${flightsList.get(order-1)}</td>--%>
-				</tr>
+				<td>${list.flightId}</td>
+				<td>${list.fromData}</td>
+				<td>${list.toData}</td>
+				<td>${list.from}</td>
+				<td>${list.to}</td>
+				<td>${list.firstClassPrice}</td>
+				<td>${list.businessClassPrice}</td>
+				<td>${list.economyClassPrice}</td><br>
+<%--	此处会报异常，暂时注释			<td>${flightsList.get(order-1)}</td>--%>
 			</c:forEach>
 		</table>
 	</div>
