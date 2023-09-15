@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.entity.Flight" %>
+<%@ page import="java.util.List" %><%--
 前端设计说明：
 所有变量（jsp变量、表单键名、非表单键命）命名规范：驼峰命名法
 表单传输方式：post
@@ -25,6 +26,7 @@
     1与2结合的代码最终应该为（在表单中使用）：
     <button name="purchasedFlight" value="1" 
     onclick="<%session.setAttribute("flightId",flightList.get(i).getFlightId());%>">购买XX舱</button>
+    或者为：onclick="${pageContext.session.setAttribute("flightId",flightList.get(order).getFlightId())}"
 后端到前端变量命名要求：
     1.从数据库获得的所有已经发布航班数组：命名：flightList，类型：List<Flight>
 
@@ -34,6 +36,7 @@
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
+	<base href="${pageContext.request.contextPath}/"> <%--防止路径叠加--%>
 <title>购买机票</title>
 <style>
 body {
@@ -153,14 +156,14 @@ input[type="checkbox"] {
 </head>
 
 <body>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<aside class="header">
 		<div class="container">
 			<nav>
 				<ul>
 					<li><a>购票系统</a></li>
-					<li><a href="myTicket.jsp">我的机票</a></li>
-					<li><a href="loginRegister.jsp">注销</a></li>
+					<li><a href="Client/myTicket">我的机票</a></li>
+					<li><a href="">注销</a></li>
 				</ul>
 			</nav>
 			<div class="title"><h2>航空公司购票系统</h2></div>
@@ -171,36 +174,49 @@ input[type="checkbox"] {
 	<div class="list">
 		<table>
 			<tr align="center">
-				<th>机票编号</th>
-				<th>乘客编号</th>
-				<th>飞行编号</th>
-				<th>座位类型</th>
-				<th>座位号码</th>
-				<th>购票</th>
+				<th>航班编号</th>
+				<th>出发时间</th>
+				<th>到达时间</th>
+				<th>始发地区</th>
+				<th>终点地区</th>
+				<th>头等舱价格</th>
+				<th>商务舱价格</th>
+				<th>经济舱价格</th>
+				<th>购买机票</th>
 			</tr>
+			<% List<Flight> flightList = (List<Flight>)request.getAttribute("flightList"); %>
+			<% int i=-1; %>
 			<c:forEach var="ticket" items="${flightList}" varStatus="order">
-				<td><${ticket.ticketId}</td>
-				<td>${ticket.clientId}</td>
-				<td>${ticket.flightId}</td>
-				<td>${ticket.seatType}</td>
-				<td>${ticket.seatNo}</td>
-				<td><input type="checkbox" id="show">
-					<div class="show">
-						<label for="show" class="show-btn"> 购买机票</label>
-					</div>
-					<form class="buyTicket" method="POST" action="/Client/buy">
-						<div class="text">选择机票类型</div>
-						<ul>
-							<select>
-								<option value="1">头等舱</option>
-								<option value="2">商务舱</option>
-								<option value="3">经济舱</option>
-							</select>
+				<tr>
+					<% i++; %>
+					<td>${ticket.flightId}</td>
+					<td>${ticket.fromData}</td>
+					<td>${ticket.toData}</td>
+					<td>${ticket.from}</td>
+					<td>${ticket.to}</td>
+					<td>${ticket.firstClassPrice}</td>
+					<td>${ticket.businessClassPrice}</td>
+					<td>${ticket.economyClassPrice}</td>
+					<td>
+						<input type="checkbox" id="show">
+						<div class="show">
+							<label for="show" class="show-btn"> 购买机票</label>
+						</div>
+						<form class="buyTicket" method="POST" action="/Client/buy">
+							<div class="text">选择机票类型</div><br>
+							<input type="radio" value="1" name="purchasedFlight">头等舱
+							<input type="radio" value="2" name="purchasedFlight">商务舱
+							<input type="radio" value="3" name="purchasedFlight">经济舱
 							<div class="btn">
-								<button type="submit">提交</button>
+								<input type="submit" class="flightId" onclick="<% session.setAttribute("flightId",flightList.get(i).getFlightId());%>">
+								<script>
+									/*不能对一个servlet的参数分别发送表单和json，让其分别接受解析到不同的形参，放弃ajax*/
+								</script>
 							</div>
-						</ul>
-					</form></td>
+
+						</form>
+					</td>
+				</tr>
 			</c:forEach>
 		</table>
 	</div>

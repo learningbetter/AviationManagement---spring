@@ -26,8 +26,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+
 <html>
 <head>
+	<base href="${pageContext.request.contextPath}/"> <%--防止路径叠加--%>
 <title>我的机票</title>
 <style>
 body {
@@ -104,9 +106,9 @@ button {
 		<div class="container">
 			<nav>
 				<ul>
-					<li><a href="buyTicket.jsp">购票系统</a></li>
+					<li><a href="Client/buyTicket">购票系统</a></li>
 					<li><a>我的机票</a></li>
-					<li><a href="loginRegister.jsp">注销</a></li>
+					<li><a href="">注销</a></li>
 				</ul>
 			</nav>
 			<div class="title"><h2>航空公司购票系统</h2></div>
@@ -123,20 +125,22 @@ button {
 				<th>座位号码</th>
 				<th>退票</th>
 			</tr>
-			<c:foreach var="ticket" items="${ticketList}" varStatus="order">
-				<td><${ticket.ticketId}</td>
-				<td>${ticket.clientId}</td>
-				<td>${ticket.flightId}</td>
-				<td>${ticket.seatType}</td>
-				<td>${ticket.seatNo}</td>
-				<td>
-					<form class="refundTicket" method="POST"
-						action="/Client/refundTicket">
-						<button name="refundTheTicket"
-							value="${ticketList.get(i).getTicketId()}">退票</button>
-					</form>
-				</td>
-			</c:foreach>
+			<c:forEach var="ticket" items="${ticketList}" varStatus="order">
+				<tr>
+					<td>${ticket.ticketId}</td>
+					<td>${ticket.client.clientId}</td>
+					<td>${ticket.flight.flightId}</td>
+					<td>${ticket.seatType}</td>
+					<td>${ticket.seatNo}</td>
+					<td>
+						<form class="refundTicket" method="POST"
+							  action="/Client/refundTicket">
+							<button name="refundTheTicket"
+									value="${ticket.ticketId}">退票</button>
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 </body>
